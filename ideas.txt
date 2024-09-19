@@ -1,0 +1,24 @@
+Features{
+
+    Playlist {
+        Calculates the runtime
+
+        Searches for a keyword in the... {
+            title
+            description
+            channel name
+        }
+
+        Sorts by...{
+            views
+            channel subscribers
+            last to first (reverses the order)
+        }
+
+        Playlist folder (you cant put playlists in playlists on youtube)
+    }
+
+    Misc {
+        Video Looper (loops a video when it's done)
+    }
+}
