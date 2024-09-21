@@ -1,62 +1,4 @@
-/*
-const apiKey = 'AIzaSyAnE-ftSffxGPU5pOmBO0Z_mZblFaD6LA8';  
-const playlistId = 'PLa5LE8jbn876NFRANd7swmdpo3_3PEqwN'; 
- 
-// Combines the API key with the playlist ID to create the API URL
-const playlistApiUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&playlistId=${playlistId}&maxResults=1&key=${apiKey}`;
 
-let durations = [];
-
-fetch(playlistApiUrl)
-    // Convert the data received to JSON
-    .then(response => response.json())
-    .then(data => {
-
-        data.items.forEach(item => {
-            // Checks that the playlist contains items
-            if (data.items && data.items[0]) {
-                // Gets the video ID of the first video in the playlist
-                const videoId = item.contentDetails.videoId;
-                // URL to fetch video details
-                const videoApiUrl = `https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=${videoId}&key=${apiKey}`;
-    
-                 // Converts the video details received to JSON
-                fetch(videoApiUrl)
-                    .then(response => response.json())
-                    .then(videoData => {
-                        if (videoData.items && videoData.items[0]) {
-                            const video = videoData.items[0].contentDetails;
-                            console.log(video);
-                            document.getElementById('video-information').innerText = `Duration: ${video.duration}`;
-                            
-                            durations.push(video.duration);
-                            console.log(durations.flat());
-                        } 
-                        
-                        else {
-                            document.getElementById('video-information').innerText = 'No video details found';
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error fetching data:', error);
-                        document.getElementById('video-information').innerText = 'Error fetching data';
-                    });
-    
-            } 
-            
-            else {
-                throw new Error('No video found in playlist');
-            }
-           
-        });
-    })
-        */
-
-    const apiKey = 'AIzaSyAnE-ftSffxGPU5pOmBO0Z_mZblFaD6LA8';  
-//const playlistId = 'PLa5LE8jbn876NFRANd7swmdpo3_3PEqwN'; 
-const playlistId = 'PLSTzdBlo5WBAZRTMWz-9_CQbLXnZ-t40n';
-
-const playlistApiUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&playlistId=${playlistId}&maxResults=50&key=${apiKey}`;
 
 function durationToSeconds(duration) {
     
@@ -92,8 +34,26 @@ function secondsToDuration(seconds) {
     return `${hours}H ${minutes}M ${remainingSeconds}S`;
 }
 
-async function getVideoDurations() {
+function getPlaylistId(url){
+
+    const equalsIndex = url.indexOf('=');
+    if(equalsIndex > -1){
+        const playlistId = url.substring(equalsIndex + 1);
+        return playlistId;
+    } 
+    
+    else {
+        return url;
+    }
+}
+
+async function getVideoDurations(url) {
     try {
+        const apiKey = 'AIzaSyAnE-ftSffxGPU5pOmBO0Z_mZblFaD6LA8';  
+        const playlistId = getPlaylistId(url);
+        const playlistApiUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&playlistId=${playlistId}&maxResults=50&key=${apiKey}`;
+        
+
         // Fetch playlist data
         const playlistResponse = await fetch(playlistApiUrl);
         const playlistData = await playlistResponse.json();
@@ -132,6 +92,10 @@ async function getVideoDurations() {
 }
 
 // Call the function to fetch video durations
-getVideoDurations();
+const confirmBtn = document.querySelector('#get-duration');
 
+confirmBtn.addEventListener('click', () => {
+    let url = document.querySelector('#playlist-url').value;
+    getVideoDurations(url);
+})
 
