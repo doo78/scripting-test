@@ -20,5 +20,6 @@ Features{
 
     Misc {
         Video Looper (loops a video when it's done)
+        Search for video on a channel
     }
 }

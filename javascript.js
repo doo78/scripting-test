@@ -66,38 +66,47 @@ async function getVideoDurations(url) {
         
 
         // Fetch playlist data
-        const playlistResponse = await fetch(playlistApiUrl);
-        const playlistData = await playlistResponse.json();
 
-        if (playlistData.items && playlistData.items.length > 0) {
-            //const durations = [];
-            let totalSeconds = 0;
+        let nextPageToken = '';
+        let totalSeconds = 0;
 
-            for (const item of playlistData.items) {
-                const videoId = item.contentDetails.videoId;
-                const videoApiUrl = `https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=${videoId}&key=${apiKey}`;
+        while (nextPageToken != null) {
 
-                // Fetch video details
-                const videoResponse = await fetch(videoApiUrl);
-                const videoData = await videoResponse.json();
+            const playlistResponse = await fetch(`${playlistApiUrl}&pageToken=${nextPageToken}`);
+            const playlistData = await playlistResponse.json();
 
-                if (videoData.items && videoData.items[0]) {
-                    const duration = videoData.items[0].contentDetails.duration;
-                    //durations.push(duration);
-                    console.log(duration);
-                    console.log(durationToSeconds(duration));
-                    totalSeconds += durationToSeconds(duration);
-                } else {
-                    console.error('No video details found for video ID:', videoId);
+            if (playlistData.items && playlistData.items.length > 0) {
+
+                for (const item of playlistData.items) {
+                    const videoId = item.contentDetails.videoId;
+                    const videoApiUrl = `https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=${videoId}&key=${apiKey}`;
+
+                    // Fetch video details
+                    const videoResponse = await fetch(videoApiUrl);
+                    const videoData = await videoResponse.json();
+
+                    if (videoData.items && videoData.items[0]) {
+                        const duration = videoData.items[0].contentDetails.duration;
+                        //durations.push(duration);
+                        console.log(duration);
+                        console.log(durationToSeconds(duration));
+                        totalSeconds += durationToSeconds(duration);
+                    } else {
+                        console.error('No video details found for video ID:', videoId);
+                    }
                 }
-            }
 
-            // Output the durations
-            let totalDuration = secondsToDuration(totalSeconds);
-            document.getElementById('video-information').innerText = `Total runtime: ${totalDuration}`;
-        } else {
-            document.getElementById('video-information').innerText = 'No videos found in playlist';
+                // Output the durations
+                let totalDuration = secondsToDuration(totalSeconds);
+                document.getElementById('video-information').innerText = `Total runtime: ${totalDuration}`;
+
+                nextPageToken = playlistData.nextPageToken;
+            } else {
+                nextPageToken = null;
+                document.getElementById('video-information').innerText = 'No videos found in playlist';
+            }
         }
+
     } catch (error) {
         console.error('Error fetching data:', error);
         document.getElementById('video-information').innerText = 'Error fetching data';
