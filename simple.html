@@ -10,11 +10,15 @@
     <body>
         <h1>Youtube playlist scraper</h1>
 
-        <div id="duration-calculator">
-            <h2>Duration calculator</h2>
+        <div id="url-input">
             <label for="playlist-url">Playlist URL:</label>
             <input type="text" id="playlist-url"></input>
-            <button id="get-duration">Confirm</button>
+            <button id="confirm-url">Confirm</button>
+        </div>
+
+        <div id="duration-calculator">
+            <h2>Duration calculator</h2>
+            <button id="get-duration">Calculate</button>
             <div id="video-information"></div>
         </div>
 
@@ -30,6 +34,19 @@
             </select>
             <div id="search-results"></div>
 
+            <h3>Select display options:</h3>
+            <label>
+                <input type="checkbox" value="title" checked> Title
+            </label>
+            <label>
+                <input type="checkbox" value="description"> Description
+            </label>
+            <label>
+                <input type="checkbox" value="channelTitle"> Channel
+            </label>
+            <label>
+                <input type="checkbox" value="url"> URL
+            </label>
         </div>
 
     </body>

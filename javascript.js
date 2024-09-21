@@ -52,7 +52,6 @@ function durationToSeconds(duration) {
 }
 
 function secondsToDuration(seconds) {
-    console.log(seconds);
 
     let hours = Math.floor(seconds / 3600);
     let minutes = Math.floor((seconds % 3600) / 60);
@@ -133,22 +132,46 @@ async function getVideoDurations(url) {
     }
 }
 
-function checkItem(item, keyword){
+function checkItem(item, searchedValue, keyword, selectedOptions) {
 
     // Checks that it isn't a deleted video
-    if (item){
+    if (searchedValue){
         const searchResults = document.getElementById('search-results');
 
         // Checks for the keyword and if found, it is added to the screen
-        if(item.toLowerCase().includes(keyword)){
-            const div = document.createElement('div');
-            div.textContent = item;
-            searchResults.appendChild(div);
+        if(searchedValue.toLowerCase().includes(keyword)){
+
+            selectedOptions.forEach(option => {
+                
+                let toAdd;
+                if (option === "url") {
+                    toAdd = `https://www.youtube.com/watch?v=${item.videoId}`;
+                }
+
+                else if (option === "title") {
+                    toAdd = item.snippet.title;
+                }
+
+                else if (option === "channelTitle") {
+                    toAdd = item.snippet.videoOwnerChannelTitle;
+                }
+
+                else if (option === "description") {
+                    toAdd = item.snippet.description;
+                }
+
+                const div = document.createElement('div');
+                div.textContent = toAdd;
+                searchResults.appendChild(div);
+            })
+
+            const hr = document.createElement('hr');
+            searchResults.appendChild(hr);
         }
     }
 }
 
-async function searchKeyword(url, option, keyword) {
+async function searchKeyword(url, option, keyword, selectedOptions) {
     try {
         const apiKey = 'AIzaSyAnE-ftSffxGPU5pOmBO0Z_mZblFaD6LA8';  
         const playlistId = getPlaylistId(url);
@@ -168,15 +191,15 @@ async function searchKeyword(url, option, keyword) {
                 for (const item of playlistData.items) {
 
                     if (option === "title"){
-                        checkItem(item.snippet.title, keyword);
+                        checkItem(item, item.snippet.title, keyword, selectedOptions);
                     }
 
                     else if (option === "description"){
-                        checkItem(item.snippet.description, keyword);
+                        checkItem(item, item.snippet.description, keyword, selectedOptions);
                     }
 
                     else{
-                        checkItem(item.snippet.videoOwnerChannelTitle, keyword);
+                        checkItem(item, item.snippet.videoOwnerChannelTitle, keyword, selectedOptions);
                     }
                 }
 
@@ -198,11 +221,16 @@ async function searchKeyword(url, option, keyword) {
 
 }
 
-// Call the function to fetch video durations
-const confirmBtn = document.querySelector('#get-duration');
+const confirmUrlBtn = document.querySelector('#confirm-url');
+let url;
 
-confirmBtn.addEventListener('click', () => {
-    let url = document.querySelector('#playlist-url').value;
+confirmUrlBtn.addEventListener('click', () => {
+    url = document.querySelector('#playlist-url').value;
+});
+
+const getDurationBtn = document.querySelector('#get-duration');
+
+getDurationBtn.addEventListener('click', () => {
     getVideoDurations(url);
 })
 
@@ -216,10 +244,17 @@ searchBtn.addEventListener('click', () => {
     let option = searchOption.value;
     let keyword = document.querySelector('#keyword').value;
 
+    const selectedBoxes = document.querySelectorAll('input[type="checkbox"]:checked');
+    let selectedOptions = [];
+
+    selectedBoxes.forEach(box => {
+        selectedOptions.push(box.value);
+    });
+
     const searchResults = document.getElementById('search-results');
     searchResults.innerHTML = '';
 
-    searchKeyword(url, option, keyword);
+    searchKeyword(url, option, keyword, selectedOptions);
 });
 
 
