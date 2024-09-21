@@ -134,13 +134,17 @@ async function getVideoDurations(url) {
 }
 
 function checkItem(item, keyword){
-    const searchResults = document.getElementById('search-results');
 
-    // Checks for the keyword and if found, it is added to the screen
-    if(item.toLowerCase().includes(keyword)){
-        const div = document.createElement('div');
-        div.textContent = item;
-        searchResults.appendChild(div);
+    // Checks that it isn't a deleted video
+    if (item){
+        const searchResults = document.getElementById('search-results');
+
+        // Checks for the keyword and if found, it is added to the screen
+        if(item.toLowerCase().includes(keyword)){
+            const div = document.createElement('div');
+            div.textContent = item;
+            searchResults.appendChild(div);
+        }
     }
 }
 
@@ -162,7 +166,18 @@ async function searchKeyword(url, option, keyword) {
             if (playlistData.items && playlistData.items.length > 0) {
                 //Checks each video for the keyword
                 for (const item of playlistData.items) {
-                    checkItem(item.snippet.title, keyword);
+
+                    if (option === "title"){
+                        checkItem(item.snippet.title, keyword);
+                    }
+
+                    else if (option === "description"){
+                        checkItem(item.snippet.description, keyword);
+                    }
+
+                    else{
+                        checkItem(item.snippet.videoOwnerChannelTitle, keyword);
+                    }
                 }
 
                 nextPageToken = playlistData.nextPageToken;
