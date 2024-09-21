@@ -22,10 +22,21 @@ function durationToSeconds(duration) {
         seconds = parseInt(duration.substring(minutesIndex + 1, secondsIndex));
     }
 
-    return hoursInSeconds + minutesInSeconds + seconds;
+    if (hoursIndex > -1 && minutesIndex > -1 && secondsIndex > -1) {
+        return hoursInSeconds + minutesInSeconds + seconds;
+    }
+
+    else if (minutesIndex > -1 && secondsIndex > -1) {
+        return minutesInSeconds + seconds;
+    }
+
+    else if (secondsIndex > -1) {
+        return seconds;
+    }
 }
 
 function secondsToDuration(seconds) {
+    console.log(seconds);
 
     let hours = Math.floor(seconds / 3600);
     let minutes = Math.floor((seconds % 3600) / 60);
@@ -73,6 +84,8 @@ async function getVideoDurations(url) {
                 if (videoData.items && videoData.items[0]) {
                     const duration = videoData.items[0].contentDetails.duration;
                     //durations.push(duration);
+                    console.log(duration);
+                    console.log(durationToSeconds(duration));
                     totalSeconds += durationToSeconds(duration);
                 } else {
                     console.error('No video details found for video ID:', videoId);
