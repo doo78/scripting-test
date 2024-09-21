@@ -33,6 +33,22 @@ function durationToSeconds(duration) {
     else if (secondsIndex > -1) {
         return seconds;
     }
+
+    else if (hoursIndex > -1) {
+        return hoursInSeconds;
+    }
+
+    else if (minutesIndex > -1) {
+        return minutesInSeconds;
+    }
+
+    else if (hoursIndex > -1 && minutesIndex > -1) {
+        return hoursInSeconds + minutesInSeconds;
+    } 
+
+    else if (hoursIndex > -1 && secondsIndex > -1) {
+        return hoursInSeconds + seconds;
+    } 
 }
 
 function secondsToDuration(seconds) {
