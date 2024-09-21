@@ -10,10 +10,28 @@
     <body>
         <h1>Youtube playlist scraper</h1>
 
-        <label for="playlist-url">Playlist URL:</label>
-        <input type="text" id="playlist-url"></input>
-        <button id="get-duration">Confirm</button>
-        <div id="video-information"></div>
+        <div id="duration-calculator">
+            <h2>Duration calculator</h2>
+            <label for="playlist-url">Playlist URL:</label>
+            <input type="text" id="playlist-url"></input>
+            <button id="get-duration">Confirm</button>
+            <div id="video-information"></div>
+        </div>
+
+        <div id="keyword-searcher">
+            <h2>Keyword searcher</h2>
+            <label for="keyword">Keyword:</label>
+            <input type="text" id="keyword"></input>
+            <button id="search">Search</button>
+            <select id="search-option" placeholder="Enter ">
+                <option value="description">Description</option>
+                <option value="title">Title</option>
+                <option value="channel">Channel</option>
+            </select>
+            <div id="search-results"></div>
+
+        </div>
+
     </body>
 
     <script src="javascript.js"></script>
