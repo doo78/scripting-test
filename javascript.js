@@ -81,6 +81,7 @@ async function getVideoDurations(url) {
         
         let nextPageToken = '';
         let totalSeconds = 0;
+        let counter = 0;
 
         // Checks if there is another batch of videos to fetch
         while (nextPageToken != null) {
@@ -102,6 +103,8 @@ async function getVideoDurations(url) {
 
                     if (videoData.items && videoData.items[0]) {
 
+                        counter++;
+                        console.log(counter);
                         const duration = videoData.items[0].contentDetails.duration;
                         totalSeconds += durationToSeconds(duration);
                     } 
@@ -144,11 +147,13 @@ function checkItem(item, searchedValue, keyword, selectedOptions) {
             selectedOptions.forEach(option => {
                 
                 let toAdd;
+
                 if (option === "url") {
-                    toAdd = `https://www.youtube.com/watch?v=${item.videoId}`;
-                }
+                    toAdd = `https://www.youtube.com/watch?v=${item.contentDetails.videoId}`;
+                }   
 
                 else if (option === "title") {
+
                     toAdd = item.snippet.title;
                 }
 
@@ -162,6 +167,15 @@ function checkItem(item, searchedValue, keyword, selectedOptions) {
 
                 const div = document.createElement('div');
                 div.textContent = toAdd;
+
+                if (option === "thumbnail") {
+                    const img = document.createElement('img');
+                    img.src = item.snippet.thumbnails.medium.url; // Use "medium" or "high" if you want a larger size
+                    img.alt = item.snippet.title; // Set the alt text to the video title
+                    img.style.width = '300px'; // You can adjust the size of the image here
+                    div.appendChild(img);
+                }
+
                 searchResults.appendChild(div);
             })
 
@@ -175,7 +189,7 @@ async function searchKeyword(url, option, keyword, selectedOptions) {
     try {
         const apiKey = 'AIzaSyAnE-ftSffxGPU5pOmBO0Z_mZblFaD6LA8';  
         const playlistId = getPlaylistId(url);
-        const playlistApiUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}&maxResults=50&key=${apiKey}`;
+        const playlistApiUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&playlistId=${playlistId}&maxResults=50&key=${apiKey}`;
     
         let nextPageToken = '';
         let totalSeconds = 0;

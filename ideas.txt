@@ -23,3 +23,9 @@ Features{
         Search for video on a channel
     }
 }
+
+To do{
+    Show that it is still calculating
+    Video id when displaying the url is undefined.
+    Maybe add thumbnail to display options
+}
