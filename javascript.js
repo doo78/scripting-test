@@ -152,6 +152,7 @@ function checkItem(item, searchedValue, keyword, selectedOptions) {
                 }   
 
                 else if (option === "title") {
+
                     toAdd = item.snippet.title;
                 }
 
@@ -168,9 +169,9 @@ function checkItem(item, searchedValue, keyword, selectedOptions) {
 
                 if (option === "thumbnail") {
                     const img = document.createElement('img');
-                    img.src = item.snippet.thumbnails.medium.url;
-                    img.alt = item.snippet.title; 
-                    img.style.width = '300px';
+                    img.src = item.snippet.thumbnails.medium.url; // Use "medium" or "high" if you want a larger size
+                    img.alt = item.snippet.title; // Set the alt text to the video title
+                    img.style.width = '300px'; // You can adjust the size of the image here
                     div.appendChild(img);
                 }
 
