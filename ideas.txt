@@ -1,18 +1,12 @@
 Features{
 
     Playlist {
-        Calculates the runtime
-
-        Searches for a keyword in the... {
-            title
-            description
-            channel name
-        }
 
         Sorts by...{
             views
             channel subscribers
             last to first (reverses the order)
+            likes
         }
 
         Playlist folder (you cant put playlists in playlists on youtube)
@@ -22,10 +16,10 @@ Features{
         Video Looper (loops a video when it's done)
         Search for video on a channel
     }
+
 }
 
 To do{
     Show that it is still calculating
-    Video id when displaying the url is undefined.
-    Maybe add thumbnail to display options
+
 }

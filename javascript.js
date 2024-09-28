@@ -1,5 +1,4 @@
 
-
 function durationToSeconds(duration) {
     
     duration = duration.replace('PT', '');
@@ -153,7 +152,6 @@ function checkItem(item, searchedValue, keyword, selectedOptions) {
                 }   
 
                 else if (option === "title") {
-
                     toAdd = item.snippet.title;
                 }
 
@@ -170,9 +168,9 @@ function checkItem(item, searchedValue, keyword, selectedOptions) {
 
                 if (option === "thumbnail") {
                     const img = document.createElement('img');
-                    img.src = item.snippet.thumbnails.medium.url; // Use "medium" or "high" if you want a larger size
-                    img.alt = item.snippet.title; // Set the alt text to the video title
-                    img.style.width = '300px'; // You can adjust the size of the image here
+                    img.src = item.snippet.thumbnails.medium.url;
+                    img.alt = item.snippet.title; 
+                    img.style.width = '300px';
                     div.appendChild(img);
                 }
 
@@ -270,6 +268,60 @@ searchBtn.addEventListener('click', () => {
 
     searchKeyword(url, option, keyword, selectedOptions);
 });
+
+// Playlist folder section
+
+const addPlaylistBtn = document.querySelector('#add-playlist-btn');
+const newPlaylistName = document.querySelector('#new-playlist-name');
+const newPlaylistUrl = document.querySelector('#new-playlist-url');
+const folderItems = document.querySelector('#folder-items');
+
+addPlaylistBtn.addEventListener('click', () => {
+    const newPlaylist = document.createElement('li');
+    newPlaylist.textContent = newPlaylistName.value + ' - ' + newPlaylistUrl.value;
+    folderItems.appendChild(newPlaylist);
+   
+});
+
+const createFolderBtn = document.querySelector('#create-folder-btn');
+const newFolderName = document.querySelector('#new-folder-name');
+const newFolderDescription = document.querySelector('#new-folder-description');
+const folderList = document.querySelector('#folder-list');
+
+createFolderBtn.addEventListener('click', () => {
+    const newFolder = document.createElement('div');
+    newFolder.textContent = newFolderName.value;
+
+    const folderContents = document.createElement('div')
+
+    const folderDescription = document.createElement('p');
+    folderDescription.textContent = newFolderDescription.value;
+
+    folderContents.appendChild(folderDescription);
+    folderContents.appendChild(folderItems);
+
+    folderContents.style.display = 'none';
+
+ 
+
+    const showContentsBtn = document.createElement('button');
+    showContentsBtn.textContent = 'Show contents';
+    newFolder.appendChild(showContentsBtn);
+
+    showContentsBtn.addEventListener('click', () => {
+        if (folderContents.style.display === 'none') {
+            folderContents.style.display = 'block';
+        } else {
+            folderContents.style.display = 'none';
+        }
+    });
+
+    newFolder.appendChild(folderContents);
+
+    folderList.appendChild(newFolder);
+});
+
+
 
 
 
