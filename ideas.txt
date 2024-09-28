@@ -9,7 +9,11 @@ Features{
             likes
         }
 
-        Playlist folder (you cant put playlists in playlists on youtube)
+        Playlist folder (you cant put playlists in playlists on youtube) {
+            delete playlist button
+            add playlist button
+            delete folder button
+        }
     }
 
     Misc {

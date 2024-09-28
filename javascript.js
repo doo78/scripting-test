@@ -272,6 +272,7 @@ searchBtn.addEventListener('click', () => {
 
 // Playlist folder section
 
+/*
 const addPlaylistBtn = document.querySelector('#add-playlist-btn');
 const newPlaylistName = document.querySelector('#new-playlist-name');
 const newPlaylistUrl = document.querySelector('#new-playlist-url');
@@ -282,7 +283,10 @@ addPlaylistBtn.addEventListener('click', () => {
     newPlaylist.textContent = newPlaylistName.value + ' - ' + newPlaylistUrl.value;
     folderItems.appendChild(newPlaylist);
    
+    newPlaylistName.value = '';
+    newPlaylistUrl.value = '';
 });
+*/
 
 const createFolderBtn = document.querySelector('#create-folder-btn');
 const newFolderName = document.querySelector('#new-folder-name');
@@ -299,11 +303,46 @@ createFolderBtn.addEventListener('click', () => {
     folderDescription.textContent = newFolderDescription.value;
 
     folderContents.appendChild(folderDescription);
+
+    ////////////
+    const addPlaylistName = document.createElement('input');
+    addPlaylistName.type = 'text';
+    addPlaylistName.setAttribute("maxlength", 30);
+    const addPlaylistNameLabel = document.createElement('label');
+    addPlaylistNameLabel.textContent = 'Playlist name: ';
+
+    const addPlaylistUrl = document.createElement('input');
+    addPlaylistUrl.type = 'text';
+    addPlaylistUrl.setAttribute("maxlength", 100);
+    const addPlaylistUrlLabel = document.createElement('label');
+    addPlaylistUrlLabel.textContent = 'Playlist url: ';
+
+    const addPlaylistBtn = document.createElement('button');
+    addPlaylistBtn.textContent = 'Add playlist';
+
+    addPlaylistBtn.addEventListener('click', () => {
+        const newPlaylist = document.createElement('li');
+        newPlaylist.textContent = addPlaylistName.value + ' - ' + addPlaylistUrl.value;
+        folderItems.appendChild(newPlaylist);
+       
+        addPlaylistName.value = '';
+        addPlaylistUrl.value = '';
+    });
+
+    const folderItems = document.createElement('ul');
+
+    folderItems.appendChild(addPlaylistNameLabel);
+    folderItems.appendChild(addPlaylistName);
+    folderItems.appendChild(addPlaylistUrlLabel);
+    folderItems.appendChild(addPlaylistUrl);
+    folderItems.appendChild(addPlaylistBtn);
+
     folderContents.appendChild(folderItems);
 
-    folderContents.style.display = 'none';
+    /////////////////
 
- 
+
+    folderContents.style.display = 'none';
 
     const showContentsBtn = document.createElement('button');
     showContentsBtn.textContent = 'Show contents';
@@ -320,6 +359,9 @@ createFolderBtn.addEventListener('click', () => {
     newFolder.appendChild(folderContents);
 
     folderList.appendChild(newFolder);
+
+    newFolderName.value = '';
+    newFolderDescription.value = '';
 });
 
 
