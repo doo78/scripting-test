@@ -327,6 +327,13 @@ createFolderBtn.addEventListener('click', () => {
        
         addPlaylistName.value = '';
         addPlaylistUrl.value = '';
+
+        const removeBtn = document.createElement('button');
+        removeBtn.textContent = 'X';
+        newPlaylist.appendChild(removeBtn);
+        removeBtn.addEventListener('click', () => {
+            newPlaylist.remove();
+        });
     });
 
     const folderItems = document.createElement('ul');
@@ -345,14 +352,16 @@ createFolderBtn.addEventListener('click', () => {
     folderContents.style.display = 'none';
 
     const showContentsBtn = document.createElement('button');
-    showContentsBtn.textContent = 'Show contents';
+    showContentsBtn.textContent = 'Show';
     newFolder.appendChild(showContentsBtn);
 
     showContentsBtn.addEventListener('click', () => {
         if (folderContents.style.display === 'none') {
             folderContents.style.display = 'block';
+            showContentsBtn.textContent = 'Hide';
         } else {
             folderContents.style.display = 'none';
+            showContentsBtn.textContent = 'Show';
         }
     });
 
