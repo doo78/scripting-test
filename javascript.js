@@ -369,6 +369,14 @@ createFolderBtn.addEventListener('click', () => {
 
     folderList.appendChild(newFolder);
 
+    const removeFolderBtn = document.createElement('button');
+    removeFolderBtn.textContent = 'X';
+    newFolder.appendChild(removeFolderBtn);
+
+    removeFolderBtn.addEventListener('click', () => {
+        newFolder.remove();
+    });
+
     newFolderName.value = '';
     newFolderDescription.value = '';
 });
