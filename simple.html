@@ -5,6 +5,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">    
         <title>Youtube playlist scraper</title>
+        <link rel="stylesheet" href="style.css">
     </head>
 
     <body>
@@ -22,83 +23,88 @@
             <div id="video-information"></div>
         </div>
 
-        <div id="keyword-searcher">
-            <h2>Keyword searcher</h2>
-            <label for="keyword">Keyword:</label>
-            <input type="text" id="keyword"></input>
-            <button id="search">Search</button>
-            <select id="search-option" placeholder="Enter ">
-                <option value="description">Description</option>
-                <option value="title">Title</option>
-                <option value="channel">Channel</option>
-            </select>
-            <div id="search-results"></div>
+        <div id="keyword-searcher-and-folders">
+            
+            <div id="playlist-folders">
 
-            <h3>Select display options:</h3>
-            <label>
-                <input type="checkbox" value="title" checked> Title
-            </label>
-            <label>
-                <input type="checkbox" value="description"> Description
-            </label>
-            <label>
-                <input type="checkbox" value="channelTitle"> Channel
-            </label>
-            <label>
-                <input type="checkbox" value="url"> URL
-            </label>
-            <label>
-                <input type="checkbox" value="thumbnail"> Thumbnail
-            </label>
+                <h2>Playlist folders</h2>
+
+                <div id="new-folder">
+
+                    <h3>New folder</h3>
+
+                    <div id="new-folder-inputs">
+                        <label for="new-folder-name">Folder name:</label>
+                        <input type="text" id="new-folder-name" maxlength="30"></input>
+
+                        <label for="new-folder-description">Folder description:</label>
+                        <input type="text" id="new-folder-description" maxlength="100"></input>
+                    </div>
+
+                    <!--
+                    <div id="new-playlist-inputs">
+                        
+                        <label for="playlist-name">Playlist name:</label>
+                        <input type="text" id="new-playlist-name" maxlength="30"></input>
+                    
+                        
+                        <label for="playlist-url">Playlist url:</label>
+                        <input type="text" id="new-playlist-url" maxlength="100"></input>
+
+                        <button id="add-playlist-btn">Add playlist</button>
+                    </div>
+                -->
+
+                    <div id="folder-items">
+
+                    </div>
+
+                    <button id="create-folder-btn">Create Folder</button>
+                    
+                </div>
+
+                <div id="existing-folders">
+
+                    <h3>Existing folders</h3>
+
+                    <div id="folder-list">
+
+                    </div>
+                </div>
+
+                </div>
+
+            <div id="keyword-searcher">
+                <h2>Keyword searcher</h2>
+                <label for="keyword">Keyword:</label>
+                <input type="text" id="keyword"></input>
+                <button id="search">Search</button>
+                <select id="search-option" placeholder="Enter ">
+                    <option value="description">Description</option>
+                    <option value="title">Title</option>
+                    <option value="channel">Channel</option>
+                </select>
+                <div id="search-results"></div>
+
+                <h3>Select display options:</h3>
+                <label>
+                    <input type="checkbox" value="title" checked> Title
+                </label>
+                <label>
+                    <input type="checkbox" value="description"> Description
+                </label>
+                <label>
+                    <input type="checkbox" value="channelTitle"> Channel
+                </label>
+                <label>
+                    <input type="checkbox" value="url"> URL
+                </label>
+                <label>
+                    <input type="checkbox" value="thumbnail"> Thumbnail
+                </label>
+            </div>
+    
         </div>
-
-        <div id="playlist-folders">
-
-            <h2>Playlist folders</h2>
-
-            <div id="existing-folders">
-
-                <h3>Existing folders</h3>
-
-                <div id="folder-list">
-
-                </div>
-            </div>
-
-            <div id="new-folder">
-
-                <h3>New folder</h3>
-
-                <div id="new-folder-inputs">
-                    <label for="new-folder-name">Folder name:</label>
-                    <input type="text" id="new-folder-name" maxlength="30"></input>
-
-                    <label for="new-folder-description">Folder description:</label>
-                    <input type="text" id="new-folder-description" maxlength="100"></input>
-                </div>
-
-                <!--
-                <div id="new-playlist-inputs">
-                    
-                    <label for="playlist-name">Playlist name:</label>
-                    <input type="text" id="new-playlist-name" maxlength="30"></input>
-                
-                    
-                    <label for="playlist-url">Playlist url:</label>
-                    <input type="text" id="new-playlist-url" maxlength="100"></input>
-
-                    <button id="add-playlist-btn">Add playlist</button>
-                </div>
-            -->
-
-                <div id="folder-items">
-
-                </div>
-
-                <button id="create-folder-btn">Create Folder</button>
-                
-            </div>
-
 
         </div>
 

@@ -9,11 +9,6 @@ Features{
             likes
         }
 
-        Playlist folder (you cant put playlists in playlists on youtube) {
-            delete playlist button
-            add playlist button
-            delete folder button
-        }
     }
 
     Misc {
@@ -24,6 +19,6 @@ Features{
 
 To do{
     Show that it is still calculating
-    Video id when displaying the url is undefined.
-    Maybe add thumbnail to display options
+    Ignore the search results that are from deleted videos
+    Prevent the user from entering no keyword
 }

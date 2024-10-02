@@ -294,7 +294,7 @@ const newFolderDescription = document.querySelector('#new-folder-description');
 const folderList = document.querySelector('#folder-list');
 
 createFolderBtn.addEventListener('click', () => {
-    const newFolder = document.createElement('div');
+    const newFolder = document.createElement('li');
     newFolder.textContent = newFolderName.value;
 
     const folderContents = document.createElement('div')
@@ -355,6 +355,10 @@ createFolderBtn.addEventListener('click', () => {
     showContentsBtn.textContent = 'Show';
     newFolder.appendChild(showContentsBtn);
 
+    const removeFolderBtn = document.createElement('button');
+    removeFolderBtn.textContent = 'X';
+    newFolder.appendChild(removeFolderBtn);
+
     showContentsBtn.addEventListener('click', () => {
         if (folderContents.style.display === 'none') {
             folderContents.style.display = 'block';
@@ -369,9 +373,14 @@ createFolderBtn.addEventListener('click', () => {
 
     folderList.appendChild(newFolder);
 
+    let horizontalLine = document.createElement('hr');
+    folderList.appendChild(horizontalLine);
+
+    /*
     const removeFolderBtn = document.createElement('button');
     removeFolderBtn.textContent = 'X';
     newFolder.appendChild(removeFolderBtn);
+    */
 
     removeFolderBtn.addEventListener('click', () => {
         newFolder.remove();
