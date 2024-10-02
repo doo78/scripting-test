@@ -21,4 +21,6 @@ To do{
     Show that it is still calculating
     Ignore the search results that are from deleted videos
     Prevent the user from entering no keyword
+    Capital letters stop the search from working
+    Notify when there are no results for the search
 }

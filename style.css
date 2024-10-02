@@ -87,6 +87,22 @@ input[type="text"]{
     padding: 50px;
 }
 
+#search-option{
+    background-color: var(--ternary-color);
+    color: white;
+    height: 30px;
+    font-weight: bold;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 13px;
+}
+
+#keyword{
+    height: 30px;
+    border-radius: 12px;
+    width: 300px;
+}
+
 #search-results{
     display: flex;
     flex-direction: column;
@@ -94,6 +110,17 @@ input[type="text"]{
     text-align: center;
     align-items: center;
     justify-content: center;
+}
+
+#search-results > div{
+}
+
+img{
+    width: 300px;
+}
+
+#search-results > div > div{
+    margin: 20px;
 }
 
 /* Playlist folders */

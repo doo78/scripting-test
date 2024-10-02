@@ -143,40 +143,51 @@ function checkItem(item, searchedValue, keyword, selectedOptions) {
         // Checks for the keyword and if found, it is added to the screen
         if(searchedValue.toLowerCase().includes(keyword)){
 
-            selectedOptions.forEach(option => {
-                
-                let toAdd;
+            const resultEntry = document.createElement('div');
 
+            selectedOptions.forEach(option => {
+
+                let toAdd;
+                let style;
+
+                
                 if (option === "url") {
                     toAdd = `https://www.youtube.com/watch?v=${item.contentDetails.videoId}`;
+                    style = "text-decoration: underline;";
                 }   
 
                 else if (option === "title") {
 
                     toAdd = item.snippet.title;
+                    style = "font-weight: bold; font-size: 24px; color: white;";
                 }
 
                 else if (option === "channelTitle") {
                     toAdd = item.snippet.videoOwnerChannelTitle;
+                    style = "font-size: 18px; color: white;";
                 }
 
                 else if (option === "description") {
                     toAdd = item.snippet.description;
+                    style = "font-size: 16px;";
                 }
 
                 const div = document.createElement('div');
+                div.style = style;
                 div.textContent = toAdd;
 
                 if (option === "thumbnail") {
                     const img = document.createElement('img');
-                    img.src = item.snippet.thumbnails.medium.url; // Use "medium" or "high" if you want a larger size
-                    img.alt = item.snippet.title; // Set the alt text to the video title
-                    img.style.width = '300px'; // You can adjust the size of the image here
+                    img.src = item.snippet.thumbnails.medium.url; 
+                    img.alt = item.snippet.title; 
+                    img.style.width = '500px';
                     div.appendChild(img);
                 }
 
-                searchResults.appendChild(div);
+                resultEntry.appendChild(div);
             })
+
+            searchResults.appendChild(resultEntry);
 
             const hr = document.createElement('hr');
             searchResults.appendChild(hr);
