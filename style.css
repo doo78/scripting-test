@@ -33,6 +33,7 @@ h1{
     height: 50px;
     padding-top: 30px;
     padding: 30px;
+    border-radius: 12px;
 }
 
 #url-input input{
@@ -45,9 +46,11 @@ h1{
 #duration-calculator{
     text-align: center;
     margin: 50px;
-    width: 50%;
+    width: 30%;
     margin-left: auto;
     margin-right: auto;
+    border-radius: 12px;
+    padding: 30px;
 }
 
 button{
@@ -82,9 +85,10 @@ input[type="text"]{
 
 /* Keyword searcher */
 #keyword-searcher{
-    margin: 30px;
+    margin: 10px;
     width: 60%;
     padding: 50px;
+    border-radius: 12px;
 }
 
 #search-option{
@@ -106,7 +110,6 @@ input[type="text"]{
 #search-results{
     display: flex;
     flex-direction: column;
-    gap: 20px;
     text-align: center;
     align-items: center;
     justify-content: center;
@@ -125,9 +128,10 @@ img{
 
 /* Playlist folders */
 #playlist-folders{
-    margin: 30px;
+    margin: 10px;
     width: 40%;
     padding: 50px;
+    border-radius: 12px;
 }
 
 #playlist-folders input{

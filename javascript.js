@@ -333,7 +333,7 @@ createFolderBtn.addEventListener('click', () => {
 
     addPlaylistBtn.addEventListener('click', () => {
         const newPlaylist = document.createElement('li');
-        newPlaylist.textContent = addPlaylistName.value + ' - ' + addPlaylistUrl.value;
+        newPlaylist.textContent = addPlaylistName.value + ' --- ' + addPlaylistUrl.value;
         folderItems.appendChild(newPlaylist);
        
         addPlaylistName.value = '';
