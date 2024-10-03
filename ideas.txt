@@ -1,5 +1,0 @@
-
-To do{
-    Ignore the search results that are from deleted videos
-    Notify when there are no results for the search
-}

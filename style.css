@@ -85,6 +85,7 @@ input[type="text"]{
     background-color: var(--ternary-color);
     border: none;
     color: white;
+    font-size: 20px;
 }
 
 #keyword-searcher-and-folders{
