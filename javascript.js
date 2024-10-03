@@ -185,6 +185,7 @@ function checkItem(item, searchedValue, keyword, selectedOptions) {
                 }
 
                 resultEntry.appendChild(div);
+                
             })
 
             searchResults.appendChild(resultEntry);
@@ -312,6 +313,7 @@ createFolderBtn.addEventListener('click', () => {
 
     const folderDescription = document.createElement('p');
     folderDescription.textContent = newFolderDescription.value;
+    folderDescription.style.fontWeight = 'bold';
 
     folderContents.appendChild(folderDescription);
 
@@ -334,6 +336,9 @@ createFolderBtn.addEventListener('click', () => {
     addPlaylistBtn.addEventListener('click', () => {
         const newPlaylist = document.createElement('li');
         newPlaylist.textContent = addPlaylistName.value + ' --- ' + addPlaylistUrl.value;
+
+        newPlaylist.style.margin = '10px';
+
         folderItems.appendChild(newPlaylist);
        
         addPlaylistName.value = '';
@@ -342,6 +347,9 @@ createFolderBtn.addEventListener('click', () => {
         const removeBtn = document.createElement('button');
         removeBtn.textContent = 'X';
         newPlaylist.appendChild(removeBtn);
+
+        newPlaylist.style.display = 'flex';
+
         removeBtn.addEventListener('click', () => {
             newPlaylist.remove();
         });
@@ -354,6 +362,9 @@ createFolderBtn.addEventListener('click', () => {
     folderItems.appendChild(addPlaylistUrlLabel);
     folderItems.appendChild(addPlaylistUrl);
     folderItems.appendChild(addPlaylistBtn);
+
+    folderItems.style.display = 'flex';
+    folderItems.style.flexDirection = 'column';
 
     folderContents.appendChild(folderItems);
 
@@ -380,12 +391,16 @@ createFolderBtn.addEventListener('click', () => {
         }
     });
 
+    let horizontalLine = document.createElement('hr');
+    newFolder.appendChild(horizontalLine);
+
     newFolder.appendChild(folderContents);
 
     folderList.appendChild(newFolder);
 
+    /*
     let horizontalLine = document.createElement('hr');
-    folderList.appendChild(horizontalLine);
+    folderList.appendChild(horizontalLine);*/
 
     /*
     const removeFolderBtn = document.createElement('button');
