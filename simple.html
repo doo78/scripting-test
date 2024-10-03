@@ -15,6 +15,7 @@
             <label for="playlist-url">Playlist URL:</label>
             <input type="text" id="playlist-url"></input>
             <button id="confirm-url">Confirm</button>
+            <div id="url-error-message"></div>
         </div>
 
         <div id="duration-calculator">
@@ -84,7 +85,6 @@
                     <option value="title">Title</option>
                     <option value="channel">Channel</option>
                 </select>
-                <div id="search-results"></div>
 
                 <h3>Select display options:</h3>
                 <label>
@@ -102,6 +102,8 @@
                 <label>
                     <input type="checkbox" value="description"> Description
                 </label>
+
+                <div id="search-results"></div>
             </div>
     
         </div>

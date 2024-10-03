@@ -82,6 +82,8 @@ async function getVideoDurations(url) {
         let totalSeconds = 0;
         let counter = 0;
 
+        getDurationBtn.textContent = 'Calculating...';
+
         // Checks if there is another batch of videos to fetch
         while (nextPageToken != null) {
 
@@ -109,7 +111,9 @@ async function getVideoDurations(url) {
                     } 
                     
                     else {
-                        console.error('No video details found for video ID:', videoId);
+                        alert('No video details found for video ID:', videoId);
+                        /*
+                        console.error('No video details found for video ID:', videoId);*/
                     }
                 }
 
@@ -122,15 +126,21 @@ async function getVideoDurations(url) {
             
             else {
                 nextPageToken = null;
-                document.getElementById('video-information').innerText = 'No videos found in playlist';
+                alert('No videos found in playlist');
+                /*
+                document.getElementById('video-information').innerText = 'No videos found in playlist';*/
             }
         }
+
+        getDurationBtn.textContent = 'Calculate';
 
     } 
     
     catch (error) {
         console.error('Error fetching data:', error);
-        document.getElementById('video-information').innerText = 'Error fetching data';
+        alert('Error fetching data. Ensure the URL is correct and the playlist is public.');
+        /*
+        document.getElementById('video-information').innerText = 'Error fetching data';*/
     }
 }
 
@@ -141,7 +151,7 @@ function checkItem(item, searchedValue, keyword, selectedOptions) {
         const searchResults = document.getElementById('search-results');
 
         // Checks for the keyword and if found, it is added to the screen
-        if(searchedValue.toLowerCase().includes(keyword)){
+        if(searchedValue.toLowerCase().includes(keyword.toLowerCase())) {
 
             const resultEntry = document.createElement('div');
 
@@ -233,7 +243,9 @@ async function searchKeyword(url, option, keyword, selectedOptions) {
 
             else{
                 nextPageToken = null;
-                document.getElementById('search-results').innerText = 'No videos found in playlist';
+                alert('No videos found in playlist');
+                /*
+                document.getElementById('search-results').innerText = 'No videos found in playlist';*/
             }
         }
         
@@ -250,6 +262,14 @@ const confirmUrlBtn = document.querySelector('#confirm-url');
 let url;
 
 confirmUrlBtn.addEventListener('click', () => {
+    if (document.querySelector('#playlist-url').value === '') {
+        alert('Please enter a playlist URL');
+    }
+
+    else if (!document.querySelector('#playlist-url').value.includes('playlist')) {
+        alert('Please enter a valid playlist URL');
+    }
+
     url = document.querySelector('#playlist-url').value;
 });
 
@@ -257,7 +277,7 @@ const getDurationBtn = document.querySelector('#get-duration');
 
 getDurationBtn.addEventListener('click', () => {
     getVideoDurations(url);
-})
+});
 
 const searchOption = document.querySelector('#search-option');
 const keyword = document.querySelector('#keyword');
@@ -269,17 +289,23 @@ searchBtn.addEventListener('click', () => {
     let option = searchOption.value;
     let keyword = document.querySelector('#keyword').value;
 
-    const selectedBoxes = document.querySelectorAll('input[type="checkbox"]:checked');
-    let selectedOptions = [];
+    if (keyword === '') {
+        alert('Please enter a keyword');
+    }
 
-    selectedBoxes.forEach(box => {
-        selectedOptions.push(box.value);
-    });
+    else{
+        const selectedBoxes = document.querySelectorAll('input[type="checkbox"]:checked');
+        let selectedOptions = [];
 
-    const searchResults = document.getElementById('search-results');
-    searchResults.innerHTML = '';
+        selectedBoxes.forEach(box => {
+            selectedOptions.push(box.value);
+        });
 
-    searchKeyword(url, option, keyword, selectedOptions);
+        const searchResults = document.getElementById('search-results');
+        searchResults.innerHTML = '';
+
+        searchKeyword(url, option, keyword, selectedOptions);
+    }   
 });
 
 // Playlist folder section
@@ -335,7 +361,7 @@ createFolderBtn.addEventListener('click', () => {
 
     addPlaylistBtn.addEventListener('click', () => {
         const newPlaylist = document.createElement('li');
-        newPlaylist.textContent = addPlaylistName.value + ' --- ' + addPlaylistUrl.value;
+        newPlaylist.textContent = addPlaylistName.value + ': ' + addPlaylistUrl.value;
 
         newPlaylist.style.margin = '10px';
 

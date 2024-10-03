@@ -37,7 +37,7 @@ h1{
 }
 
 #url-input input{
-    font-size: 30px;
+    font-size: 25px;
     border-radius: 22px;
     margin-left: 10px;
     width: 40%;
@@ -53,6 +53,12 @@ h1{
     padding: 30px;
 }
 
+#video-information{
+    font-weight: bold;
+    font-size: 25px;
+    margin: 20px;
+}
+
 button{
     background-color: var(--button-color);
     color: white;
@@ -65,6 +71,10 @@ button{
     cursor: pointer;
     margin: 10px;
     min-width: 40px;
+}
+
+button:hover{
+    background-color: var(--text-color);
 }
 
 #confirm-url{
@@ -88,7 +98,7 @@ input[type="text"]{
 #keyword-searcher{
     margin: 10px;
     margin-left: 5px;
-    width: 60%;
+    width: 70%;
     padding: 50px;
     border-radius: 12px;
 }
