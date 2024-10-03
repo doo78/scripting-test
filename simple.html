@@ -10,7 +10,9 @@
     </head>
 
     <body>
-        <h1>Youtube playlist scraper</h1>
+        
+        <h1><img id="logo"src="icon.png" alt="icon">Youtube playlist scraper</h1>
+        
 
         <div id="url-input">
             <label for="playlist-url">Playlist URL:</label>
@@ -26,15 +28,12 @@
         </div>
 
         <div id="keyword-searcher-and-folders">
-            
+    
             <div id="playlist-folders">
-
                 <h2>Playlist folders</h2>
 
                 <div id="new-folder">
-
                     <h3>New folder</h3>
-
                     <div id="new-folder-inputs">
                         <label for="new-folder-name">Folder name:</label>
                         <input type="text" id="new-folder-name" maxlength="30"></input>
@@ -43,35 +42,14 @@
                         <input type="text" id="new-folder-description" maxlength="100"></input>
                     </div>
 
-                    <!--
-                    <div id="new-playlist-inputs">
-                        
-                        <label for="playlist-name">Playlist name:</label>
-                        <input type="text" id="new-playlist-name" maxlength="30"></input>
-                    
-                        
-                        <label for="playlist-url">Playlist url:</label>
-                        <input type="text" id="new-playlist-url" maxlength="100"></input>
-
-                        <button id="add-playlist-btn">Add playlist</button>
-                    </div>
-                -->
-
-                    <div id="folder-items">
-
-                    </div>
+                    <div id="folder-items"></div>
 
                     <button id="create-folder-btn">Create Folder</button>
-                    
                 </div>
 
                 <div id="existing-folders">
-
                     <h3>Existing folders</h3>
-
-                    <div id="folder-list">
-
-                    </div>
+                    <div id="folder-list"></div>
                 </div>
 
                 </div>
@@ -106,11 +84,8 @@
 
                 <div id="search-results"></div>
             </div>
-    
         </div>
-
         </div>
-
     </body>
 
     <script src="javascript.js"></script>

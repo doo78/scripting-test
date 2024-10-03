@@ -1,9 +1,14 @@
+/* Colour variables */
 :root{
     --primary-color: rgb(11,21,40);
     --secondary-color: rgb(21,34,56);
     --ternary-color: rgb(28,43,69);
     --text-color: rgb(42,146,236);
     --button-color: rgb(0, 110, 209);
+}
+
+#logo{
+    width: 70px;
 }
 
 body{
@@ -15,6 +20,7 @@ body{
 }
 
 div{
+    /* Applies the background to every section */
     background-color: var(--secondary-color);
 }
 
@@ -23,6 +29,7 @@ h1{
     font-size: 50px;
 }
 
+/* URL input section */
 #url-input{
     text-align: center;
     margin-top: 10px;
@@ -43,6 +50,11 @@ h1{
     width: 40%;
 }
 
+#confirm-url{
+    margin-left: 10px;
+}
+
+/* Duration calculator section */
 #duration-calculator{
     text-align: center;
     margin: 50px;
@@ -77,9 +89,6 @@ button:hover{
     background-color: var(--text-color);
 }
 
-#confirm-url{
-    margin-left: 10px;
-}
 
 input[type="text"]{
     background-color: var(--ternary-color);
@@ -126,9 +135,6 @@ input[type="text"]{
     text-align: center;
     align-items: center;
     justify-content: center;
-}
-
-#search-results > div{
 }
 
 img{

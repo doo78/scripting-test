@@ -1,4 +1,5 @@
 
+// Converts the ISO 8601 duration format to seconds
 function durationToSeconds(duration) {
     
     duration = duration.replace('PT', '');
@@ -9,6 +10,7 @@ function durationToSeconds(duration) {
     
     let hoursInSeconds, minutesInSeconds, seconds;
 
+    // Checks that the duration has hours, minutes and seconds
     if (hoursIndex > -1) {
         hoursInSeconds = parseInt(duration.substring(0, hoursIndex))*3600;
     }
@@ -21,6 +23,7 @@ function durationToSeconds(duration) {
         seconds = parseInt(duration.substring(minutesIndex + 1, secondsIndex));
     }
 
+    // Checks which combination of hours, minutes and seconds is given
     if (hoursIndex > -1 && minutesIndex > -1 && secondsIndex > -1) {
         return hoursInSeconds + minutesInSeconds + seconds;
     }
@@ -50,6 +53,7 @@ function durationToSeconds(duration) {
     } 
 }
 
+// Converts seconds to the ISO 8601 duration format
 function secondsToDuration(seconds) {
 
     let hours = Math.floor(seconds / 3600);
@@ -59,8 +63,10 @@ function secondsToDuration(seconds) {
     return `${hours}H ${minutes}M ${remainingSeconds}S`;
 }
 
+// Gets the playlist ID from the URL
 function getPlaylistId(url){
 
+    // The playlist ID comes after = in the URL
     const equalsIndex = url.indexOf('=');
     if(equalsIndex > -1){
         const playlistId = url.substring(equalsIndex + 1);
@@ -72,17 +78,19 @@ function getPlaylistId(url){
     }
 }
 
+// Calculates the duration of all the videos in the playlist
 async function getVideoDurations(url) {
     try {
         const apiKey = 'AIzaSyAnE-ftSffxGPU5pOmBO0Z_mZblFaD6LA8';  
         const playlistId = getPlaylistId(url);
+        // Combines the API URL with the playlist ID
         const playlistApiUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&playlistId=${playlistId}&maxResults=50&key=${apiKey}`;
         
         let nextPageToken = '';
         let totalSeconds = 0;
         let counter = 0;
 
-        getDurationBtn.textContent = 'Calculating...';
+        getDurationBtn.textContent = 'Calculating...'; // Shows the user it is calculating
 
         // Checks if there is another batch of videos to fetch
         while (nextPageToken != null) {
@@ -91,6 +99,7 @@ async function getVideoDurations(url) {
             const playlistResponse = await fetch(`${playlistApiUrl}&pageToken=${nextPageToken}`);
             const playlistData = await playlistResponse.json();
 
+            // Checks if there are more videos in the playlist
             if (playlistData.items && playlistData.items.length > 0) {
 
                 // For each playlist item, it fetches the video details
@@ -105,15 +114,12 @@ async function getVideoDurations(url) {
                     if (videoData.items && videoData.items[0]) {
 
                         counter++;
-                        console.log(counter);
                         const duration = videoData.items[0].contentDetails.duration;
                         totalSeconds += durationToSeconds(duration);
                     } 
                     
                     else {
                         alert('No video details found for video ID:', videoId);
-                        /*
-                        console.error('No video details found for video ID:', videoId);*/
                     }
                 }
 
@@ -127,41 +133,36 @@ async function getVideoDurations(url) {
             else {
                 nextPageToken = null;
                 alert('No videos found in playlist');
-                /*
-                document.getElementById('video-information').innerText = 'No videos found in playlist';*/
             }
         }
 
-        getDurationBtn.textContent = 'Calculate';
-
+        getDurationBtn.textContent = 'Calculate'; // Resets the button text
     } 
     
     catch (error) {
-        console.error('Error fetching data:', error);
         alert('Error fetching data. Ensure the URL is correct and the playlist is public.');
-        /*
-        document.getElementById('video-information').innerText = 'Error fetching data';*/
     }
 }
 
+// Checks the specified video for the keyword
 function checkItem(item, searchedValue, keyword, selectedOptions) {
 
-    // Checks that it isn't a deleted video
     if (searchedValue){
         const searchResults = document.getElementById('search-results');
 
         // Checks for the keyword and if found, it is added to the screen
         if(searchedValue.toLowerCase().includes(keyword.toLowerCase())) {
 
+            // Ensures the video is not deleted or private
             if (!item.snippet.title.includes('Deleted video') && !item.snippet.title.includes('Private video')){
 
                 const resultEntry = document.createElement('div');
 
+                // Adds the selected video details to the screen
                 selectedOptions.forEach(option => {
 
                     let toAdd;
                     let style;
-
                     
                     if (option === "url") {
                         toAdd = `https://www.youtube.com/watch?v=${item.contentDetails.videoId}`;
@@ -169,7 +170,6 @@ function checkItem(item, searchedValue, keyword, selectedOptions) {
                     }   
 
                     else if (option === "title") {
-
                         toAdd = item.snippet.title;
                         style = "font-weight: bold; font-size: 24px; color: white;";
                     }
@@ -197,7 +197,6 @@ function checkItem(item, searchedValue, keyword, selectedOptions) {
                     }
 
                     resultEntry.appendChild(div);
-                    
                 })
 
                 searchResults.appendChild(resultEntry);
@@ -209,6 +208,7 @@ function checkItem(item, searchedValue, keyword, selectedOptions) {
     }
 }
 
+// Fetches and queries the playlist for the keyword
 async function searchKeyword(url, option, keyword, selectedOptions) {
     try {
         const apiKey = 'AIzaSyAnE-ftSffxGPU5pOmBO0Z_mZblFaD6LA8';  
@@ -217,7 +217,6 @@ async function searchKeyword(url, option, keyword, selectedOptions) {
     
         let nextPageToken = '';
         let totalSeconds = 0;
-        const titles = [];
 
         while (nextPageToken != null) {
             
@@ -225,9 +224,9 @@ async function searchKeyword(url, option, keyword, selectedOptions) {
             const playlistData = await playlistResponse.json();
             
             if (playlistData.items && playlistData.items.length > 0) {
+
                 //Checks each video for the keyword
                 for (const item of playlistData.items) {
-
                     if (option === "title"){
                         checkItem(item, item.snippet.title, keyword, selectedOptions);
                     }
@@ -247,8 +246,6 @@ async function searchKeyword(url, option, keyword, selectedOptions) {
             else{
                 nextPageToken = null;
                 alert('No videos found in playlist');
-                /*
-                document.getElementById('search-results').innerText = 'No videos found in playlist';*/
             }
         }
         
@@ -264,6 +261,7 @@ async function searchKeyword(url, option, keyword, selectedOptions) {
 const confirmUrlBtn = document.querySelector('#confirm-url');
 let url;
 
+// Ensures the URL is valid
 confirmUrlBtn.addEventListener('click', () => {
     if (document.querySelector('#playlist-url').value === '') {
         alert('Please enter a playlist URL');
@@ -284,7 +282,6 @@ getDurationBtn.addEventListener('click', () => {
 
 const searchOption = document.querySelector('#search-option');
 const keyword = document.querySelector('#keyword');
-
 const searchBtn = document.querySelector('#search');
 
 searchBtn.addEventListener('click', () => {
@@ -300,6 +297,7 @@ searchBtn.addEventListener('click', () => {
         const selectedBoxes = document.querySelectorAll('input[type="checkbox"]:checked');
         let selectedOptions = [];
 
+        // Adds each selected option to an array
         selectedBoxes.forEach(box => {
             selectedOptions.push(box.value);
         });
@@ -311,29 +309,12 @@ searchBtn.addEventListener('click', () => {
     }   
 });
 
-// Playlist folder section
-
-/*
-const addPlaylistBtn = document.querySelector('#add-playlist-btn');
-const newPlaylistName = document.querySelector('#new-playlist-name');
-const newPlaylistUrl = document.querySelector('#new-playlist-url');
-const folderItems = document.querySelector('#folder-items');
-
-addPlaylistBtn.addEventListener('click', () => {
-    const newPlaylist = document.createElement('li');
-    newPlaylist.textContent = newPlaylistName.value + ' - ' + newPlaylistUrl.value;
-    folderItems.appendChild(newPlaylist);
-   
-    newPlaylistName.value = '';
-    newPlaylistUrl.value = '';
-});
-*/
-
 const createFolderBtn = document.querySelector('#create-folder-btn');
 const newFolderName = document.querySelector('#new-folder-name');
 const newFolderDescription = document.querySelector('#new-folder-description');
 const folderList = document.querySelector('#folder-list');
 
+// Creates a playlist folder
 createFolderBtn.addEventListener('click', () => {
     const newFolder = document.createElement('li');
     newFolder.textContent = newFolderName.value;
@@ -346,7 +327,7 @@ createFolderBtn.addEventListener('click', () => {
 
     folderContents.appendChild(folderDescription);
 
-    ////////////
+    // Creates the playlist name and URL input boxes
     const addPlaylistName = document.createElement('input');
     addPlaylistName.type = 'text';
     addPlaylistName.setAttribute("maxlength", 30);
@@ -362,6 +343,7 @@ createFolderBtn.addEventListener('click', () => {
     const addPlaylistBtn = document.createElement('button');
     addPlaylistBtn.textContent = 'Add playlist';
 
+    // Adds the playlist to the folder
     addPlaylistBtn.addEventListener('click', () => {
         const newPlaylist = document.createElement('li');
         newPlaylist.textContent = addPlaylistName.value + ': ' + addPlaylistUrl.value;
@@ -386,6 +368,7 @@ createFolderBtn.addEventListener('click', () => {
 
     const folderItems = document.createElement('ul');
 
+    // Organises all the folder contents into a HTML element
     folderItems.appendChild(addPlaylistNameLabel);
     folderItems.appendChild(addPlaylistName);
     folderItems.appendChild(addPlaylistUrlLabel);
@@ -397,9 +380,6 @@ createFolderBtn.addEventListener('click', () => {
 
     folderContents.appendChild(folderItems);
 
-    /////////////////
-
-
     folderContents.style.display = 'none';
 
     const showContentsBtn = document.createElement('button');
@@ -410,6 +390,7 @@ createFolderBtn.addEventListener('click', () => {
     removeFolderBtn.textContent = 'X';
     newFolder.appendChild(removeFolderBtn);
 
+    // Hides and shows the contents of the folder
     showContentsBtn.addEventListener('click', () => {
         if (folderContents.style.display === 'none') {
             folderContents.style.display = 'block';
@@ -420,27 +401,20 @@ createFolderBtn.addEventListener('click', () => {
         }
     });
 
+    // Separates each folder with a line
     let horizontalLine = document.createElement('hr');
     newFolder.appendChild(horizontalLine);
 
     newFolder.appendChild(folderContents);
 
+    // Adds the folder to the folder list
     folderList.appendChild(newFolder);
-
-    /*
-    let horizontalLine = document.createElement('hr');
-    folderList.appendChild(horizontalLine);*/
-
-    /*
-    const removeFolderBtn = document.createElement('button');
-    removeFolderBtn.textContent = 'X';
-    newFolder.appendChild(removeFolderBtn);
-    */
 
     removeFolderBtn.addEventListener('click', () => {
         newFolder.remove();
     });
 
+    // Resets the input fields
     newFolderName.value = '';
     newFolderDescription.value = '';
 });
