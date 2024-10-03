@@ -153,55 +153,58 @@ function checkItem(item, searchedValue, keyword, selectedOptions) {
         // Checks for the keyword and if found, it is added to the screen
         if(searchedValue.toLowerCase().includes(keyword.toLowerCase())) {
 
-            const resultEntry = document.createElement('div');
+            if (!item.snippet.title.includes('Deleted video') && !item.snippet.title.includes('Private video')){
 
-            selectedOptions.forEach(option => {
+                const resultEntry = document.createElement('div');
 
-                let toAdd;
-                let style;
+                selectedOptions.forEach(option => {
 
-                
-                if (option === "url") {
-                    toAdd = `https://www.youtube.com/watch?v=${item.contentDetails.videoId}`;
-                    style = "text-decoration: underline;";
-                }   
+                    let toAdd;
+                    let style;
 
-                else if (option === "title") {
+                    
+                    if (option === "url") {
+                        toAdd = `https://www.youtube.com/watch?v=${item.contentDetails.videoId}`;
+                        style = "text-decoration: underline;";
+                    }   
 
-                    toAdd = item.snippet.title;
-                    style = "font-weight: bold; font-size: 24px; color: white;";
-                }
+                    else if (option === "title") {
 
-                else if (option === "channelTitle") {
-                    toAdd = item.snippet.videoOwnerChannelTitle;
-                    style = "font-size: 18px; color: white;";
-                }
+                        toAdd = item.snippet.title;
+                        style = "font-weight: bold; font-size: 24px; color: white;";
+                    }
 
-                else if (option === "description") {
-                    toAdd = item.snippet.description;
-                    style = "font-size: 16px;";
-                }
+                    else if (option === "channelTitle") {
+                        toAdd = item.snippet.videoOwnerChannelTitle;
+                        style = "font-size: 18px; color: white;";
+                    }
 
-                const div = document.createElement('div');
-                div.style = style;
-                div.textContent = toAdd;
+                    else if (option === "description") {
+                        toAdd = item.snippet.description;
+                        style = "font-size: 16px;";
+                    }
 
-                if (option === "thumbnail") {
-                    const img = document.createElement('img');
-                    img.src = item.snippet.thumbnails.medium.url; 
-                    img.alt = item.snippet.title; 
-                    img.style.width = '500px';
-                    div.appendChild(img);
-                }
+                    const div = document.createElement('div');
+                    div.style = style;
+                    div.textContent = toAdd;
 
-                resultEntry.appendChild(div);
-                
-            })
+                    if (option === "thumbnail") {
+                        const img = document.createElement('img');
+                        img.src = item.snippet.thumbnails.medium.url; 
+                        img.alt = item.snippet.title; 
+                        img.style.width = '500px';
+                        div.appendChild(img);
+                    }
 
-            searchResults.appendChild(resultEntry);
+                    resultEntry.appendChild(div);
+                    
+                })
 
-            const hr = document.createElement('hr');
-            searchResults.appendChild(hr);
+                searchResults.appendChild(resultEntry);
+
+                const hr = document.createElement('hr');
+                searchResults.appendChild(hr);
+            }
         }
     }
 }
