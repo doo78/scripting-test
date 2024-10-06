@@ -117,10 +117,6 @@ async function getVideoDurations(url) {
                         const duration = videoData.items[0].contentDetails.duration;
                         totalSeconds += durationToSeconds(duration);
                     } 
-                    
-                    else {
-                        alert('No video details found for video ID:', videoId);
-                    }
                 }
 
                 // Output the durations
@@ -190,7 +186,7 @@ function checkItem(item, searchedValue, keyword, selectedOptions) {
 
                     if (option === "thumbnail") {
                         const img = document.createElement('img');
-                        img.src = item.snippet.thumbnails.medium.url; 
+                        img.src = item.snippet.thumbnails.high.url; 
                         img.alt = item.snippet.title; 
                         img.style.width = '500px';
                         div.appendChild(img);
@@ -345,25 +341,31 @@ createFolderBtn.addEventListener('click', () => {
 
     // Adds the playlist to the folder
     addPlaylistBtn.addEventListener('click', () => {
-        const newPlaylist = document.createElement('li');
-        newPlaylist.textContent = addPlaylistName.value + ': ' + addPlaylistUrl.value;
+        if (addPlaylistName.value === '' || addPlaylistUrl.value === '') {
+            alert('Please enter a playlist name and url');
+        }
 
-        newPlaylist.style.margin = '10px';
+        else {
+            const newPlaylist = document.createElement('li');
+            newPlaylist.textContent = addPlaylistName.value + ': ' + addPlaylistUrl.value;
 
-        folderItems.appendChild(newPlaylist);
-       
-        addPlaylistName.value = '';
-        addPlaylistUrl.value = '';
+            newPlaylist.style.margin = '10px';
 
-        const removeBtn = document.createElement('button');
-        removeBtn.textContent = 'X';
-        newPlaylist.appendChild(removeBtn);
+            folderItems.appendChild(newPlaylist);
+        
+            addPlaylistName.value = '';
+            addPlaylistUrl.value = '';
 
-        newPlaylist.style.display = 'flex';
+            const removeBtn = document.createElement('button');
+            removeBtn.textContent = 'X';
+            newPlaylist.appendChild(removeBtn);
 
-        removeBtn.addEventListener('click', () => {
-            newPlaylist.remove();
-        });
+            newPlaylist.style.display = 'flex';
+
+            removeBtn.addEventListener('click', () => {
+                newPlaylist.remove();
+            });
+        }
     });
 
     const folderItems = document.createElement('ul');
